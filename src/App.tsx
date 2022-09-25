@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -60,6 +61,15 @@ const rows = [
 
 function App() {
   
+  const [data,setData] = useState();
+
+  useEffect(()=>{
+    axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
+      .then((response)=>{
+        console.log(response.data.Data);
+      })
+  },[]);
+
   return (
     <Container style={firstBlock} maxWidth="lg">
       <Grid container spacing={2}>
