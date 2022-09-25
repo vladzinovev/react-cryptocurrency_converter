@@ -39,7 +39,7 @@ const currencyType={
 };
 
 
-
+/* 
 function createData(
   name: string,
   calories: number,
@@ -57,16 +57,36 @@ const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
+ */
 
+type TCoin={
+  name:string,
+  fullName:string,
+  imageUrl:string,
+  price:number,
+  volume24hour:number,
+
+
+}
 
 function App() {
   
-  const [data,setData] = useState();
+  const [allCoins,setAllCoins] = useState<TCoin[]>([]);
 
   useEffect(()=>{
     axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
       .then((response)=>{
-        console.log(response.data.Data);
+        setAllCoins(response.data.Data.map((coin:any)=>{
+          const obj={
+            name:coin.CoinInfo.Name,
+            fullName:coin.CoinInfo.fullName,
+            imageUrl:coin.CoinInfo.ImageUrl,
+            price:coin.CoinInfo.DISPLAY.USD.PRICE,
+            volume24Hour:coin.CoinInfo.DISPLAY.USD.VOLUME24HOUR,
+          };
+          
+          return obj;
+        }));
       })
   },[]);
 
@@ -86,7 +106,7 @@ function App() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
+                {allCoins.map((row) => (
                   <TableRow
                     key={row.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
