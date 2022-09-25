@@ -80,9 +80,9 @@ function App() {
           const obj={
             name:coin.CoinInfo.Name,
             fullName:coin.CoinInfo.fullName,
-            imageUrl:coin.CoinInfo.ImageUrl,
-            price:coin.CoinInfo.DISPLAY.USD.PRICE,
-            volume24Hour:coin.CoinInfo.DISPLAY.USD.VOLUME24HOUR,
+            imageUrl:`https://www.cryptocompare.com/${coin.CoinInfo.ImageUrl}`,
+            price:coin.RAW.USD.PRICE,
+            volume24Hour:coin.RAW.USD.VOLUME24HOUR,
           };
           
           return obj;
@@ -106,18 +106,19 @@ function App() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allCoins.map((row) => (
+                {allCoins.map((coin) => (
                   <TableRow
-                    key={row.name}
+                    key={coin.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      <img src={coin.imageUrl} alt='image'></img>
+                      {coin.name}
                     </TableCell>
-                    <TableCell align="center">{row.calories}</TableCell>
-                    <TableCell align="center">{row.fat}</TableCell>
-                    <TableCell align="center">{row.carbs}</TableCell>
-                    <TableCell align="center">{row.protein}</TableCell>
+                    <TableCell align="center">{coin.name}</TableCell>
+                    <TableCell align="center">{coin.fullName}</TableCell>
+                    <TableCell align="center">{coin.price}</TableCell>
+                    <TableCell align="center">{coin.volume24hour}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
