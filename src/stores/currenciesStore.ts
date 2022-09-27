@@ -1,4 +1,5 @@
-import { observable,computed,action } from "mobx";
+import axios from "axios";
+import { observable, computed, action } from "mobx";
 import { TCoin } from "../types";
 
 class CurrenciesStore {
@@ -15,6 +16,25 @@ class CurrenciesStore {
     @action
     setItems=(items:TCoin[]):void=>{
         this.items=items;
+    }
+
+    @action
+    fetchCoins=()=>{
+        axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
+            .then((response)=>{
+                const coins:TCoin[]=(response.data.Data.map((coin:any)=>{
+                    const obj={
+                        name:coin.CoinInfo.Name,
+                        fullName:coin.CoinInfo.FullName,
+                        imageUrl:`https://www.cryptocompare.com/${coin.CoinInfo.ImageUrl}`,
+                        price:coin.RAW.USD.PRICE.toFixed(3),
+                        volume24Hour:coin.RAW.USD.VOLUME24HOUR.toFixed(0),
+                    };
+                    
+                    return obj;
+                    }));
+                this.items=coins;
+            })
     }
 
     /* constructor(initItems:TCoin[]){
