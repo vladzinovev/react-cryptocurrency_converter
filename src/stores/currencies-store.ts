@@ -2,7 +2,7 @@ import axios from "axios";
 import { observable, computed, action } from "mobx";
 import { TCoin } from "../types";
 
-class CurrenciesStore {
+export default class CurrenciesStore {
     //отслеживание состояний (отслеживаем наши обьекты)
     @observable private items: TCoin[]=[];
 
@@ -22,8 +22,8 @@ class CurrenciesStore {
     fetchCoins=()=>{
         axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
             .then((response)=>{
-                const coins:TCoin[]=(response.data.Data.map((coin:any)=>{
-                    const obj={
+                const coins:TCoin[]=response.data.Data.map((coin:any)=>{
+                    const obj:TCoin={
                         name:coin.CoinInfo.Name,
                         fullName:coin.CoinInfo.FullName,
                         imageUrl:`https://www.cryptocompare.com/${coin.CoinInfo.ImageUrl}`,
@@ -32,7 +32,7 @@ class CurrenciesStore {
                     };
                     
                     return obj;
-                    }));
+                    });
                 this.items=coins;
             })
     }
@@ -41,5 +41,4 @@ class CurrenciesStore {
         this.items=initItems;
     } */
 }
-export default CurrenciesStore;
 

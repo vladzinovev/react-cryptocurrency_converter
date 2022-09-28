@@ -1,10 +1,9 @@
-import ConverterStore from "./converterStore";
-import CurrenciesStore from "./currenciesStore";
+import React from "react";
+import ConverterStore from "./converter-store";
+import CurrenciesStore from "./currencies-store";
 
-
-
-const stores={
-    CurrenciesStore:new CurrenciesStore(),
-    ConverterStore:new ConverterStore(),
-}
+const stores=React.createContext({
+    currenciesStore:new CurrenciesStore(),
+    converterStore:new ConverterStore(),
+})
 export default stores;
