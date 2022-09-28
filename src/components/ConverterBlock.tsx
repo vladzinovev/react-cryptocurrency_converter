@@ -37,6 +37,7 @@ type IConverterBlock={
 const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
     const {currenciesStore}=useStores();
     const coins:string[]=currenciesStore.getItems.map(coin=>coin.name);
+    const sname:TCoin[]=currenciesStore.getItems;
     
     return (
     <Item>
@@ -73,12 +74,12 @@ const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
             <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={10}
+            value={sname.map(sn=>sn.name[0])}
             label="Валюта"
             >
-            <MenuItem value={10}>USD</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+                {
+                    sname.map(sn=><MenuItem value={sn.name}>{sn.name}</MenuItem>)
+                }
             </Select>
         </FormControl>
         </div>
