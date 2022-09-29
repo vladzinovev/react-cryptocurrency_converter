@@ -15,8 +15,7 @@ import '../index.css';
 
 const currencyIcon={
     width:'18px',
-    height:'18px',
-    background:'#ffdada'
+    height:'18px'
 };
 
 const colors:{[key:string]:string}={
@@ -36,14 +35,17 @@ type ICryptoTable={
 
 const CryptoTable:React.FC<ICryptoTable>=observer(()=>{
   const {currenciesStore} = useStores();
-  const items: TCoin[]=currenciesStore.getItems;
-  const diffObj: TCoinDiff = currenciesStore.getDiffObj;
+  const items: TCoin[]=currenciesStore!.getItems;
+  const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
 
-  useEffect(()=>{
-    if(currenciesStore){
+  useEffect(() => {
+    if (currenciesStore) {
       currenciesStore.fetchCoins();
+      setInterval(() => {
+        currenciesStore.fetchCoins();
+      }, 30 * 1000);
     }
-  });
+  }, []);
 
   return (
       <TableContainer component={Paper}>
@@ -69,8 +71,9 @@ const CryptoTable:React.FC<ICryptoTable>=observer(()=>{
                   <TableCell align="center">{coin.name}</TableCell>
                   <TableCell align="center">{coin.fullName}</TableCell>
                   <TableCell 
-                    className={diffObj[coin.name]}
-                   align="center">$ {coin.price}</TableCell>
+                    className={diffObj[coin.name] && `${diffObj[coin.name]}`}
+                    
+                    align="center">$ {coin.price}</TableCell>
                   <TableCell align="center">$ {coin.volume24Hour}</TableCell>
                 </TableRow>
               ))}

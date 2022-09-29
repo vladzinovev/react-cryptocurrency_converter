@@ -33,7 +33,6 @@ export default class CurrenciesStore {
             },{},
         );
         this.items=items;
-        
     }
 
     @action
@@ -51,7 +50,7 @@ export default class CurrenciesStore {
                     
                     return obj;
                     });
-                this.items=coins;
+                    this.setItems(coins);
             })
     }
     
