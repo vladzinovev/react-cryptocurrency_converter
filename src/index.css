@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.currencyIcons {
+  width:18px;
+  height:18px;
+  background-Color:#ffdada;
+}
+.red{
+  background-Color:#ffdada;
+}
+.green{
+  background-Color:#d8ffc4;
+}

@@ -12,6 +12,10 @@ export default class CurrenciesStore {
     get getItems(){
         return this.items;
     }
+    @computed
+    get getDiffObj() {
+        return this.diffObj;
+    }
 
     //Обновление состояния с помощью действий (помечает метод как действие, которое изменит состояние)
     @action
@@ -50,6 +54,7 @@ export default class CurrenciesStore {
                 this.items=coins;
             })
     }
+    
     diffCurrencies(arr1: TCoin[], arr2: TCoin[]) {
         return arr1.filter((obj, index) => {
           if (obj.price !== arr2[index].price) {
@@ -57,7 +62,7 @@ export default class CurrenciesStore {
           }
           return false;
         });
-      }
+    }
 
     /* constructor(initItems:TCoin[]){
         this.items=initItems;
