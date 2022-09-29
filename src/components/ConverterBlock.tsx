@@ -37,7 +37,7 @@ type IConverterBlock={
 const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
     const {currenciesStore}=useStores();
     const coins:string[]=currenciesStore.getItems.map(coin=>coin.name);
-    const sname:TCoin[]=currenciesStore.getItems;
+    //const sname:TCoin[]=currenciesStore.getItems;
     
     return (
     <Item>
@@ -74,12 +74,16 @@ const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
             <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={sname.map(sn=>sn.name[0])}
+            //value={sname.map(sn=>sn.name[0])}
+            value={coins[0]}
             label="Валюта"
             >
                 {
-                    sname.map(sn=><MenuItem value={sn.name}>{sn.name}</MenuItem>)
+                    coins.map(name=><MenuItem value={name}>{name}</MenuItem>)
                 }
+                {/* {
+                    sname.map(sn=><MenuItem value={sn.name}>{sn.name}</MenuItem>)
+                } */}
             </Select>
         </FormControl>
         </div>
@@ -90,10 +94,6 @@ const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
 )})
 export default ConverterBlock;
 
-
-function useStore(): { CryptoTable: any; } {
-    throw new Error("Function not implemented.");
-}
 /* 
 const ConverterBlock:React.FC<IConverterBlock>=inject('currenciesStore')(
     observer(({currenciesStore})=>{

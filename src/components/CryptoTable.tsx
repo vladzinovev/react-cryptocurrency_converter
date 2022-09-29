@@ -17,6 +17,11 @@ const currencyIcon={
     height:'18px',
 };
 
+const colors:{[key:string]:string}={
+  green:'#d8ffc4',
+  red:'#ffdada'
+}
+
 
 type ICryptoTable={
   currenciesStore?: CurrenciesStore;
@@ -55,7 +60,7 @@ const CryptoTable:React.FC<ICryptoTable>=observer(()=>{
                   </TableCell>
                   <TableCell align="center">{coin.name}</TableCell>
                   <TableCell align="center">{coin.fullName}</TableCell>
-                  <TableCell align="center">$ {coin.price}</TableCell>
+                  <TableCell style={{background:colors.red}} align="center">$ {coin.price}</TableCell>
                   <TableCell align="center">$ {coin.volume24Hour}</TableCell>
                 </TableRow>
               ))}

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { observable, computed, action } from "mobx";
-import { TCoin } from "../types";
+import { TCoin, TCoinDiff } from "../types";
 
 export default class CurrenciesStore {
     //отслеживание состояний (отслеживаем наши обьекты)
     @observable private items: TCoin[]=[];
+    @observable private diffObj: TCoinDiff = {};
 
     //вычисляемое (для создания функций которые вычисляют свое значение из состояния)
     @computed
@@ -15,7 +16,20 @@ export default class CurrenciesStore {
     //Обновление состояния с помощью действий (помечает метод как действие, которое изменит состояние)
     @action
     setItems=(items:TCoin[]):void=>{
+        this.diffObj = this.diffCurrencies(this.items, items).reduce(
+            (initObj: TCoinDiff, obj: TCoin) => {
+              const newObj: TCoin = items.find(o => o.name === obj.name)!;
+              const oldObj: TCoin = this.items.find(itemObj => itemObj.name === newObj.name)!;
+              const color: string =
+                newObj.price === oldObj.price ? '' : newObj.price > oldObj.price ? 'green' : 'red';
+      
+              initObj[newObj.name] = color;
+      
+              return initObj;
+            },{},
+        );
         this.items=items;
+        
     }
 
     @action
@@ -36,6 +50,14 @@ export default class CurrenciesStore {
                 this.items=coins;
             })
     }
+    diffCurrencies(arr1: TCoin[], arr2: TCoin[]) {
+        return arr1.filter((obj, index) => {
+          if (obj.price !== arr2[index].price) {
+            return true;
+          }
+          return false;
+        });
+      }
 
     /* constructor(initItems:TCoin[]){
         this.items=initItems;
