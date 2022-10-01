@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import { Paper } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,8 +14,8 @@ import { useStores } from "../hooks/use-stores";
 import '../index.css';
 
 const currencyIcon={
-    width:'18px',
-    height:'18px'
+  width:'18px',
+  height:'18px'
 };
 
 const colors:{[key:string]:string}={
@@ -33,26 +33,73 @@ type ICryptoTable={
   currenciesStore?: CurrenciesStore;
 }
 
-const CryptoTable:React.FC<ICryptoTable>=observer(()=>{
+ 
+const CryptoTable=observer(()=>{
   const {currenciesStore} = useStores();
-  const items: TCoin[]=currenciesStore!.getItems;
+  const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
+  const [count, setCount]=useState(0);
+  
+  useEffect(() =>{
+    currenciesStore!.fetchCoins();
+    const timerId =setInterval(()=>{
+      setCount(count+1);
+    }, 15 * 1000);
+    return () => {
+      clearInterval(timerId);
+    }  
+  }, [items]);
 
-  useEffect(() => {
-    if (currenciesStore) {
-      currenciesStore.fetchCoins();
-      setInterval(() => {
-        currenciesStore.fetchCoins();
-      }, 30 * 1000);
-    }
-  }, []);
+ /* 
+  useEffect(() =>{
+    
+    console.log('useEffect');
+    currenciesStore!.fetchCoins();
+    const timerId =setInterval(()=>{
+      setCount(count+1);
+      console.log('count setinterval');
+    }, 30 * 1000);
+    return () => {
+      clearInterval(timerId);
+    }  
+    
+    
+  }, [items]); */
 
+/* 
+  useEffect(() =>{
+    currenciesStore!.fetchCoins();
+    console.log('useEffect');
+    const timerId =setInterval(()=>{
+      setCount(count+1);
+      console.log('count setinterval');
+    }, 30 * 1000);
+    
+    return () => {
+      clearInterval(timerId);
+    }  
+  }, [diffObj]);
+ */
+/* 
+  useEffect(() =>{
+    currenciesStore!.fetchCoins();
+    console.log('useEffect');
+    const timerId =setInterval(()=>{
+      setCount(count+1);
+      console.log('count setinterval');
+    }, 30 * 1000);
+    return () => {
+      clearInterval(timerId);
+    }  
+  }, [count]);
+ */
+  
   return (
       <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
+                <TableCell>{count}</TableCell>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">FullName</TableCell>
                 <TableCell align="center">Price</TableCell>
@@ -72,7 +119,6 @@ const CryptoTable:React.FC<ICryptoTable>=observer(()=>{
                   <TableCell align="center">{coin.fullName}</TableCell>
                   <TableCell 
                     className={diffObj[coin.name] && `${diffObj[coin.name]}`}
-                    
                     align="center">$ {coin.price}</TableCell>
                   <TableCell align="center">$ {coin.volume24Hour}</TableCell>
                 </TableRow>

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { observable, computed, action } from "mobx";
+import { createContext } from "react";
 import { TCoin, TCoinDiff } from "../types";
 
-export default class CurrenciesStore {
+class CurrenciesStore {
     //отслеживание состояний (отслеживаем наши обьекты)
     @observable private items: TCoin[]=[];
     @observable private diffObj: TCoinDiff = {};
@@ -18,8 +19,7 @@ export default class CurrenciesStore {
     }
 
     //Обновление состояния с помощью действий (помечает метод как действие, которое изменит состояние)
-    @action
-    setItems=(items:TCoin[]):void=>{
+    @action setItems=(items:TCoin[]):void=>{
         this.diffObj = this.diffCurrencies(this.items, items).reduce(
             (initObj: TCoinDiff, obj: TCoin) => {
               const newObj: TCoin = items.find(o => o.name === obj.name)!;
@@ -33,10 +33,9 @@ export default class CurrenciesStore {
             },{},
         );
         this.items=items;
-    }
+    };
 
-    @action
-    fetchCoins=()=>{
+    @action fetchCoins=()=>{
         axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
             .then((response)=>{
                 const coins:TCoin[]=response.data.Data.map((coin:any)=>{
@@ -51,8 +50,8 @@ export default class CurrenciesStore {
                     return obj;
                     });
                     this.setItems(coins);
-            })
-    }
+            });
+    };
     
     diffCurrencies(arr1: TCoin[], arr2: TCoin[]) {
         return arr1.filter((obj, index) => {
@@ -62,9 +61,5 @@ export default class CurrenciesStore {
           return false;
         });
     }
-
-    /* constructor(initItems:TCoin[]){
-        this.items=initItems;
-    } */
 }
-
+export default CurrenciesStore;
