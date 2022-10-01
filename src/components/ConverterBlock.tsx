@@ -32,7 +32,7 @@ const currencyType={
 
 type IConverterBlock={
     currenciesStore?: CurrenciesStore;
-  }
+}
 
 const ConverterBlock:React.FC<IConverterBlock>=observer(()=>{
     const {currenciesStore}=useStores();

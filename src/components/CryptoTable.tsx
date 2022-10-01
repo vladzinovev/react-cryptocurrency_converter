@@ -18,24 +18,8 @@ const currencyIcon={
   height:'18px'
 };
 
-const colors:{[key:string]:string}={
-  green:'#d8ffc4',
-  red:'#ffdada'
-}
-const red:{[key:string]:string}={
-  background:'#ffdada'
-}
-const green:{[key:string]:string}={
-  background:'#d8ffc4'
-}
-
-type ICryptoTable={
-  currenciesStore?: CurrenciesStore;
-}
-
- 
 const CryptoTable=observer(()=>{
-  const {currenciesStore} = useStores();
+  const {currenciesStore,converterStore} = useStores();
   const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
   const [count, setCount]=useState(0);
@@ -49,6 +33,10 @@ const CryptoTable=observer(()=>{
       clearInterval(timerId);
     }  
   }, [items]);
+
+  const onClickRow = (coin: TCoin) => {
+    converterStore.setSelectedCoin(coin);
+  };
 
  /* 
   useEffect(() =>{
@@ -110,6 +98,7 @@ const CryptoTable=observer(()=>{
               {!items.length ? 'Загрузка...' : items.map((coin:TCoin) => (
                 <TableRow
                   className={"cursor"}
+                  onClick={() => onClickRow(coin)}
                   key={coin.name}
                   hover
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
