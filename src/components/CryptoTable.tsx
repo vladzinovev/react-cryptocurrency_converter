@@ -109,7 +109,9 @@ const CryptoTable=observer(()=>{
             <TableBody>
               {!items.length ? 'Загрузка...' : items.map((coin:TCoin) => (
                 <TableRow
+                  className={"cursor"}
                   key={coin.name}
+                  hover
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
