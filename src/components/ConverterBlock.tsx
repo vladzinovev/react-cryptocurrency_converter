@@ -35,10 +35,10 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     const {converterStore}=useStores();
     const coins:string[]=currenciesStore!.getItems.map(coin=>coin.name);
 
-    const [age, setAge] = React.useState("BTC");
+    const [selectedOutCoin, setSelectedOutCoin] = React.useState("USD");
     const handleChange = (event: SelectChangeEvent) => {
         //setAge(converterStore!.getSelectedCoin.name);
-        setAge(event.target.value as string);
+        setSelectedOutCoin(event.target.value as string );
     };
     //const sname:TCoin[]=currenciesStore.getItems;
     
@@ -58,8 +58,8 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                onChange={handleChange}
+                value={converterStore!.getSelectedCoin.name}
+                
                 label="Валюта"
                 >
                     {coins.map(name=><MenuItem value={name}>{name}</MenuItem>)}
@@ -78,10 +78,12 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                onChange={handleChange}
                 //value={sname.map(sn=>sn.name[0])}
-                value={'BTC'}
+                value={selectedOutCoin}
                 label="Валюта"
                 >
+                    <MenuItem value="USD">USD</MenuItem>
                     {
                         coins.map(name=><MenuItem value={name}>{name}</MenuItem>)
                     }
