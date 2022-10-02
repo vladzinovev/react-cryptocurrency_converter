@@ -6,88 +6,47 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { TCoin, TCoinDiff } from "../types";
-import { inject, observer } from "mobx-react";
+import { IBlocks, TCoin, TCoinDiff, TSelectedCoin } from "../types";
+import {observer } from "mobx-react-lite";
 import CurrenciesStore from "../stores/currencies-store";
 import axios from "axios";
 import { useStores } from "../hooks/use-stores";
 import '../index.css';
+import ConverterStore from "../stores/converter-store";
 
 const currencyIcon={
   width:'18px',
   height:'18px'
 };
 
+
 const CryptoTable=observer(()=>{
   const {currenciesStore,converterStore} = useStores();
   const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
   const [count, setCount]=useState(0);
+  const elem=converterStore!.getSelectedCoin.name;
   
   useEffect(() =>{
     currenciesStore!.fetchCoins();
     const timerId =setInterval(()=>{
       setCount(count+1);
-    }, 15 * 1000);
-    return () => {
-      clearInterval(timerId);
-    }  
-  }, [items]);
-
-  const onClickRow = (coin: TCoin) => {
-    converterStore.setSelectedCoin(coin);
-  };
-
- /* 
-  useEffect(() =>{
-    
-    console.log('useEffect');
-    currenciesStore!.fetchCoins();
-    const timerId =setInterval(()=>{
-      setCount(count+1);
-      console.log('count setinterval');
-    }, 30 * 1000);
-    return () => {
-      clearInterval(timerId);
-    }  
-    
-    
-  }, [items]); */
-
-/* 
-  useEffect(() =>{
-    currenciesStore!.fetchCoins();
-    console.log('useEffect');
-    const timerId =setInterval(()=>{
-      setCount(count+1);
-      console.log('count setinterval');
-    }, 30 * 1000);
-    
-    return () => {
-      clearInterval(timerId);
-    }  
-  }, [diffObj]);
- */
-/* 
-  useEffect(() =>{
-    currenciesStore!.fetchCoins();
-    console.log('useEffect');
-    const timerId =setInterval(()=>{
-      setCount(count+1);
-      console.log('count setinterval');
-    }, 30 * 1000);
+    }, 15000);
     return () => {
       clearInterval(timerId);
     }  
   }, [count]);
- */
-  
+
+  const onClickRow = (coin: TCoin) => {
+    converterStore!.setSelectedCoin(coin);
+  };
+
   return (
       <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>{count}</TableCell>
+                <TableCell>Icon{count}</TableCell>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">FullName</TableCell>
                 <TableCell align="center">Price</TableCell>
@@ -98,7 +57,7 @@ const CryptoTable=observer(()=>{
               {!items.length ? 'Загрузка...' : items.map((coin:TCoin) => (
                 <TableRow
                   className={"cursor"}
-                  onClick={() => onClickRow(coin)}
+                  onClick={()=>onClickRow(coin)}
                   key={coin.name}
                   hover
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

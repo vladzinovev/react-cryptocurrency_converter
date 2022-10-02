@@ -1,24 +1,29 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, makeObservable, makeAutoObservable } from 'mobx';
 import { TCoin, TSelectedCoin } from '../types';
 
 class ConverterStore {
-  @observable private selectedCoin: TSelectedCoin = {
-    name: '',
-    price: 0,
-  };
-
-  @computed
-  get getSelectedCoin() {
-    return this.selectedCoin;
-  }
-
-  @action
-  setSelectedCoin(coin: TCoin) {
-    this.selectedCoin = {
-      name: coin.name,
-      price: coin.price,
+    @observable private selectedCoin: TSelectedCoin = {
+        name: '',
+        price: 0,
     };
-  }
+    
+    constructor() {
+        makeObservable(this);
+    }
+
+    @computed
+    get getSelectedCoin() {
+        return this.selectedCoin;
+    }
+
+    @action
+    setSelectedCoin(coin: TCoin) {
+        this.selectedCoin = {
+            name: coin.name,
+            price: coin.price,
+        };
+    }
+    
 }
 
 export default ConverterStore;

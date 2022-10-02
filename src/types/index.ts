@@ -1,3 +1,6 @@
+import ConverterStore from "../stores/converter-store";
+import CurrenciesStore from "../stores/currencies-store";
+
 export type TCoin = {
     name: string;
     fullName: string;
@@ -12,3 +15,8 @@ export type TSelectedCoin = {
     name: string;
     price: number;
 };
+
+export type IBlocks={
+    currenciesStore?: CurrenciesStore;
+    converterStore?: ConverterStore;
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { observable, computed, action } from "mobx";
+import { observable, computed, action, makeObservable, makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { TCoin, TCoinDiff } from "../types";
 
@@ -7,6 +7,10 @@ class CurrenciesStore {
     //отслеживание состояний (отслеживаем наши обьекты)
     @observable private items: TCoin[]=[];
     @observable private diffObj: TCoinDiff = {};
+
+    constructor() {
+        makeObservable(this);
+    }
 
     //вычисляемое (для создания функций которые вычисляют свое значение из состояния)
     @computed
@@ -19,7 +23,8 @@ class CurrenciesStore {
     }
 
     //Обновление состояния с помощью действий (помечает метод как действие, которое изменит состояние)
-    @action setItems=(items:TCoin[]):void=>{
+    @action
+    setItems=(items:TCoin[]):void=>{
         this.diffObj = this.diffCurrencies(this.items, items).reduce(
             (initObj: TCoinDiff, obj: TCoin) => {
               const newObj: TCoin = items.find(o => o.name === obj.name)!;
@@ -35,7 +40,8 @@ class CurrenciesStore {
         this.items=items;
     };
 
-    @action fetchCoins=()=>{
+    @action
+    fetchCoins=()=>{
         axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
             .then((response)=>{
                 const coins:TCoin[]=response.data.Data.map((coin:any)=>{
