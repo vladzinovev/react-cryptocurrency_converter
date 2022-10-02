@@ -26,17 +26,26 @@ const CryptoTable=observer(()=>{
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
   const [count, setCount]=useState(0);
   const elem=converterStore!.getSelectedCoin.name;
+  const [ flag,setFlag]=useState(true);
   
   useEffect(() =>{
-    currenciesStore!.fetchCoins();
+    if(flag){
+      update();
+    }
     const timerId =setInterval(()=>{
+      currenciesStore!.fetchCoins();
       setCount(count+1);
     }, 15000);
     return () => {
       clearInterval(timerId);
-    }  
+    } 
+    
   }, [count]);
 
+  const update=()=>{
+    currenciesStore!.fetchCoins();
+    setFlag(false);
+  }
   const onClickRow = (coin: TCoin) => {
     converterStore!.setSelectedCoin(coin);
   };
