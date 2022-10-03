@@ -40,7 +40,7 @@ class ConverterStore {
     }
 
     @observable selectedInPrice={
-        price: 0,
+        price: 10000,
     }
     @computed
     get getSelectedInPrice() {

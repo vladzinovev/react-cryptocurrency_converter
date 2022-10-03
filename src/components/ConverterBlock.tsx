@@ -255,20 +255,19 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     const {currenciesStore}=useStores();
     const {converterStore}=useStores();
     
-    
     const coins:string[]=currenciesStore!.getItems.map(coin=>coin.name);
 
     const [selectedOutCoin, setSelectedOutCoin] = useState("BTC");
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedOutCoin(event.target.value as string );
+        setValue2(findprice());
     };
     const handleClick = (event: any) => {
         converterStore.setSelectedInCoin(event.target.value as string);
+        setValue2(findprice());
     };
     
     const [value2,setValue2]=useState(0);
-    
-    //const sname:TCoin[]=currenciesStore.getItems;
     
     const findprice=()=>{
         const curOutPriceName:any=currenciesStore.getItems.find(coin=>coin.name==selectedOutCoin);
@@ -277,18 +276,10 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
         return curPrice;
     }
     
-    
     const PriceClick = (event: any) => {
         converterStore.setSelectedInPrice(event.target.value as string);
         setValue2(findprice());
-    };
-
-    useEffect(()=>{
-        PriceClick;
-        handleClick;
-    },[value2])
-    
-    
+    };    
 
     return (
     <Item>
