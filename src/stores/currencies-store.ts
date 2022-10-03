@@ -1,6 +1,8 @@
 import axios from "axios";
 import { observable, computed, action, makeObservable, makeAutoObservable } from "mobx";
 import { createContext } from "react";
+import { useStores } from "../hooks/use-stores";
+import stores from "../stores/index";
 import { TCoin, TCoinDiff } from "../types";
 
 class CurrenciesStore {
@@ -55,7 +57,7 @@ class CurrenciesStore {
                     
                     return obj;
                     });
-                    this.setItems(coins);
+                this.setItems(coins);
             });
     };
     

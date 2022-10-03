@@ -25,7 +25,6 @@ const CryptoTable=observer(()=>{
   const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
   const [count, setCount]=useState(0);
-  const elem=converterStore!.getSelectedCoin.name;
   const [ flag,setFlag]=useState(true);
   
   useEffect(() =>{
@@ -48,6 +47,8 @@ const CryptoTable=observer(()=>{
   }
   const onClickRow = (coin: TCoin) => {
     converterStore!.setSelectedCoin(coin);
+    converterStore.setSelectedInCoin(coin.name);
+
   };
 
   return (

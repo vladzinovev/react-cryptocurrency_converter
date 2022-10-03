@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, styled } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
@@ -33,13 +33,19 @@ const currencyType={
 const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     const {currenciesStore}=useStores();
     const {converterStore}=useStores();
+    
+    
     const coins:string[]=currenciesStore!.getItems.map(coin=>coin.name);
 
-    const [selectedOutCoin, setSelectedOutCoin] = React.useState("USD");
+    const [selectedOutCoin, setSelectedOutCoin] = useState("USD");
     const handleChange = (event: SelectChangeEvent) => {
-        //setAge(converterStore!.getSelectedCoin.name);
         setSelectedOutCoin(event.target.value as string );
     };
+    const handleClick = (event: any) => {
+        converterStore.setSelectedInCoin(event.target.value as string);
+        console.log(event.target.value);
+    };
+    
     //const sname:TCoin[]=currenciesStore.getItems;
     
     
@@ -58,8 +64,8 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={converterStore!.getSelectedCoin.name}
-                
+                value={converterStore!.getSelectedInCoin.name}
+                onChange={handleClick}
                 label="Валюта"
                 >
                     {coins.map(name=><MenuItem value={name}>{name}</MenuItem>)}
