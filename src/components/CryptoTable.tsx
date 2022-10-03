@@ -48,6 +48,7 @@ const CryptoTable=observer(()=>{
   const onClickRow = (coin: TCoin) => {
     converterStore!.setSelectedCoin(coin);
     converterStore.setSelectedInCoin(coin.name);
+    converterStore!.setSelectedInPrice(coin.price);
 
   };
 

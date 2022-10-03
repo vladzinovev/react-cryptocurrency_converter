@@ -7,9 +7,7 @@ class ConverterStore {
         name: '',
         price: 0,
     };
-    @observable selectedInCoin={
-        name:'',
-    }
+    
     
     constructor() {
         makeObservable(this);
@@ -19,11 +17,6 @@ class ConverterStore {
     get getSelectedCoin() {
         return this.selectedCoin;
     }
-    @computed
-    get getSelectedInCoin() {
-        return this.selectedInCoin;
-    }
-
     @action
     setSelectedCoin(coin: TCoin) {
         this.selectedCoin = {
@@ -31,12 +24,35 @@ class ConverterStore {
             price: coin.price,
         };
     }
+
+    @observable selectedInCoin={
+        name:'BTC',
+    }
+    @computed
+    get getSelectedInCoin() {
+        return this.selectedInCoin;
+    }
     @action
     setSelectedInCoin(name:any) {
         this.selectedInCoin = {
             name: name
         };
     }
+
+    @observable selectedInPrice={
+        price: 0,
+    }
+    @computed
+    get getSelectedInPrice() {
+        return this.selectedInPrice;
+    }
+    @action
+    setSelectedInPrice(price:any) {
+        this.selectedInPrice = {
+            price: price
+        };
+    }
+
     
 }
 
