@@ -252,14 +252,14 @@ const currencyType={
 };
 
 const ConverterBlock:React.FC<IBlocks>=observer(()=>{
-    const {currenciesStore}=useStores();
-    const {converterStore}=useStores();
+    const {converterStore,currenciesStore}=useStores();
     
     const coins:string[]=currenciesStore!.getItems.map(coin=>coin.name);
 
-    const [selectedOutCoin, setSelectedOutCoin] = useState("BTC");
-    const handleChange = (event: SelectChangeEvent) => {
-        setSelectedOutCoin(event.target.value as string );
+    
+    const  handleChange = (event: SelectChangeEvent) => {
+        converterStore.setSelectedOutCoin(event.target.value as string);
+        console.log(converterStore.getSelectedOutCoin.name);
         setValue2(findprice());
     };
     const handleClick = (event: any) => {
@@ -270,12 +270,12 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     const [value2,setValue2]=useState(0);
     
     const findprice=()=>{
-        const curOutPriceName:any=currenciesStore.getItems.find(coin=>coin.name==selectedOutCoin);
-        const curInName:any=currenciesStore.getItems.find(coin=>coin.name==converterStore.getSelectedInCoin.name);
-        const curPrice:any=converterStore!.getSelectedInPrice.price*curOutPriceName.price/curInName.price;
+        const curOutPriceName:any=currenciesStore.getItems.find(coin=>coin.name==converterStore.getSelectedOutCoin.name);
+        const curInPriceName:any=currenciesStore.getItems.find(coin=>coin.name==converterStore.getSelectedInCoin.name);
+        const curPrice:any=converterStore!.getSelectedInPrice.price*curInPriceName.price/curOutPriceName.price;
         return curPrice;
     }
-    
+
     const PriceClick = (event: any) => {
         converterStore.setSelectedInPrice(event.target.value as string);
         setValue2(findprice());
@@ -320,7 +320,7 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
                 id="demo-simple-select"
                 onChange={handleChange}
                 //value={sname.map(sn=>sn.name[0])}
-                value={selectedOutCoin}
+                value={converterStore.getSelectedOutCoin.name}
                 label="Валюта"
                 >
                     {

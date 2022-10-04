@@ -40,7 +40,7 @@ class ConverterStore {
     }
 
     @observable selectedInPrice={
-        price: 10000,
+        price: 1000,
     }
     @computed
     get getSelectedInPrice() {
@@ -53,7 +53,19 @@ class ConverterStore {
         };
     }
 
-    
+    @observable selectedOutCoin={
+        name:'BTC',
+    }
+    @computed
+    get getSelectedOutCoin() {
+        return this.selectedOutCoin;
+    }
+    @action
+    setSelectedOutCoin(name:any) {
+        this.selectedOutCoin = {
+            name: name
+        };
+    }
 }
 
 export default ConverterStore;
