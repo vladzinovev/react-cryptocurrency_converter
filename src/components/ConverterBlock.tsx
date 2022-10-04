@@ -32,12 +32,11 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     const {converterStore,currenciesStore}=useStores();
     
     const coins:string[]=currenciesStore!.getItems.map(coin=>coin.name);
-
-    const  handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: SelectChangeEvent) => {
         converterStore.setSelectedOutCoin(event.target.value as string);
         setValue2(findprice());
     };
-    const handleClick = (event: any) => {
+    const handleClick = (event: SelectChangeEvent) => {
         converterStore.setSelectedInCoin(event.target.value as string);
         setValue2(findprice());
     };
@@ -52,7 +51,7 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
     }
 
     const PriceClick = (event: any) => {
-        converterStore.setSelectedInPrice(event.target.value as string);
+        converterStore.setSelectedInPrice(event.target.value as number);
         setValue2(findprice());
     };    
 
@@ -94,7 +93,6 @@ const ConverterBlock:React.FC<IBlocks>=observer(()=>{
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={handleChange}
-                //value={sname.map(sn=>sn.name[0])}
                 value={converterStore.getSelectedOutCoin.name}
                 label="Валюта"
                 >

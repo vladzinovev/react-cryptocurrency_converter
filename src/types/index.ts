@@ -11,11 +11,6 @@ export type TCoin = {
   
 export type TCoinDiff = { [key: string]: string };
 
-export type TSelectedCoin = {
-    name: string;
-    price: number;
-};
-
 export type IBlocks={
     currenciesStore?: CurrenciesStore;
     converterStore?: ConverterStore;

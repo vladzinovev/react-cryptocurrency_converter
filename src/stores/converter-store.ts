@@ -1,5 +1,4 @@
 import { observable, computed, action, makeObservable} from 'mobx';
-import { TCoin, TSelectedCoin } from '../types';
 
 class ConverterStore {
     @observable selectedInCoin={
@@ -10,7 +9,7 @@ class ConverterStore {
         return this.selectedInCoin;
     }
     @action
-    setSelectedInCoin(name:any) {
+    setSelectedInCoin(name:string) {
         this.selectedInCoin = {
             name: name
         };
@@ -24,7 +23,7 @@ class ConverterStore {
         return this.selectedInPrice;
     }
     @action
-    setSelectedInPrice(price:any) {
+    setSelectedInPrice(price:number) {
         this.selectedInPrice = {
             price: price
         };
@@ -38,7 +37,7 @@ class ConverterStore {
         return this.selectedOutCoin;
     }
     @action
-    setSelectedOutCoin(name:any) {
+    setSelectedOutCoin(name:string) {
         this.selectedOutCoin = {
             name: name
         };
