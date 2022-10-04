@@ -1,8 +1,5 @@
 import axios from "axios";
-import { observable, computed, action, makeObservable, makeAutoObservable } from "mobx";
-import { createContext } from "react";
-import { useStores } from "../hooks/use-stores";
-import stores from "../stores/index";
+import { observable, computed, action, makeObservable} from "mobx";
 import { TCoin, TCoinDiff } from "../types";
 
 class CurrenciesStore {

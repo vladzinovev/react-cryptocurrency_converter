@@ -6,19 +6,15 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { IBlocks, TCoin, TCoinDiff, TSelectedCoin } from "../types";
+import {TCoin, TCoinDiff} from "../types";
 import {observer } from "mobx-react-lite";
-import CurrenciesStore from "../stores/currencies-store";
-import axios from "axios";
 import { useStores } from "../hooks/use-stores";
 import '../index.css';
-import ConverterStore from "../stores/converter-store";
 
 const currencyIcon={
   width:'18px',
   height:'18px'
 };
-
 
 const CryptoTable=observer(()=>{
   const {currenciesStore,converterStore} = useStores();
@@ -38,7 +34,6 @@ const CryptoTable=observer(()=>{
     return () => {
       clearInterval(timerId);
     } 
-    
   }, [count]);
 
   const update=()=>{
