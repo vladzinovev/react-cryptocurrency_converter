@@ -20,7 +20,6 @@ const CryptoTable=observer(()=>{
   const {currenciesStore,converterStore} = useStores();
   const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
-  const [count, setCount]=useState(0);
   const [ flag,setFlag]=useState(true);
   
   useEffect(() =>{
@@ -29,22 +28,19 @@ const CryptoTable=observer(()=>{
     }
     const timerId =setInterval(()=>{
       currenciesStore!.fetchCoins();
-      setCount(count+1);
     }, 15000);
     return () => {
       clearInterval(timerId);
     } 
-  }, [count]);
+  }, [currenciesStore!.getItems]);
 
   const update=()=>{
     currenciesStore!.fetchCoins();
     setFlag(false);
   }
   const onClickRow = (coin: TCoin) => {
-    converterStore!.setSelectedCoin(coin);
     converterStore.setSelectedInCoin(coin.name);
     converterStore!.setSelectedInPrice(coin.price);
-
   };
 
   return (
@@ -52,7 +48,7 @@ const CryptoTable=observer(()=>{
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Icon{count}</TableCell>
+                <TableCell>ICON</TableCell>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">FullName</TableCell>
                 <TableCell align="center">Price</TableCell>
