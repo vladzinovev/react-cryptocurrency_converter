@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {TCoin, TCoinDiff} from "../types";
+import {IBlocks, TCoin, TCoinDiff} from "../types";
 import {observer } from "mobx-react-lite";
 import { useStores } from "../hooks/use-stores";
 import '../index.css';
@@ -16,7 +16,7 @@ const currencyIcon={
   height:'18px'
 };
 
-const CryptoTable=observer(()=>{
+const CryptoTable:React.FC<IBlocks>=observer(()=>{
   const {currenciesStore,converterStore} = useStores();
   const items: TCoin[] = currenciesStore!.getItems;
   const diffObj: TCoinDiff = currenciesStore!.getDiffObj;
