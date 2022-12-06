@@ -9,6 +9,7 @@ const firstBlock={padding:'10px'};
 function App() {
   return (
     <Container style={firstBlock} maxWidth="lg">
+      <h1>Hello</h1>
       <Grid container spacing={2}>
         <Grid item xs={8}>
           <CryptoTable/>
